@@ -39,6 +39,10 @@ User Management API is RESTful web service built with .NET Core. This API has cu
     docker ps
     ```
 
+5. Verify default db (set to PostgreSQL)
+    ```bash
+    docker exec -it <container_id> printenv DB_PROVIDER
+    ```
 
 The API will be running at `https://localhost:8080`
 
@@ -49,7 +53,8 @@ The API will be running at `https://localhost:8080`
 - Response: 200 OK with the list of users and totalUsers.
 
 ## Testing
-Using postman you can test endpoint `http://localhost:8080/Users` with Get request or you can open swagger on browser `http://localhost:8080/swagger/index.html`
+- Using Postman you can test endpoint `http://localhost:8080/Users` with Get request 
+- Using swagger on browser `http://localhost:8080/swagger/index.html`
 
 ## Configuration
 - This Project has docker-compose.yml file which is by default set as DB_PROVIDER=PostgreSQL under environment. When you build containers initially it will set to PostgreSQL database. 
@@ -57,6 +62,7 @@ Using postman you can test endpoint `http://localhost:8080/Users` with Get reque
     1. docker stop <container_id> (docker ps will give you list of container running and provide api container Id here)
     2. docker rm <container_id>
     3. docker run -e DB_PROVIDER=MySQL -p 8080:8080 usermanagement-api
+    4. verify MySQL is set as DB_PROVIDER with command docker exec -it <container_id> printenv DB_PROVIDER
 
 ## Notes
 - When you build containers both MySQL and PostgreSQL databases will be created with required table and data seeder values. 
