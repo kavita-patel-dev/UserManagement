@@ -1,0 +1,95 @@
+version: '3.8'
+
+networks:
+  my_network:
+    driver: bridge
+
+services:
+  usermanagement-api:
+    image: usermanagement-api
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    environment:
+      - DB_PROVIDER=PostgreSQL
+      - ASPNETCORE_ENVIRONMENT=Development
+    depends_on:
+      - postgres
+    networks:
+      - my_network
+
+  postgres:
+    image: postgres:16
+    container_name: postgres_db
+    restart: always
+    environment:
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: admin@123
+      POSTGRES_DB: UserManagementDB
+    ports:
+      - "5432:5432"
+    networks:
+      - my_network
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./UserManagement.Infrastructure/DBScript/Init_PostgreSQL.sql:/docker-entrypoint-initdb.d/Init_PostgreSQL.sql
+
+  mysql:
+    image: mysql:8
+    container_name: mysql_db
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: root
+      MYSQL_DATABASE: UserManagementDB
+      MYSQL_USER: admin
+      MYSQL_PASSWORD: admin@123
+    ports:
+      - "3306:3306"
+    networks:
+      - my_network
+    volumes:
+      - mysql_data:/var/lib/mysql
+      - ./UserManagement.Infrastructure/DBScript/Init_MySQL.sql:/docker-entrypoint-initdb.d/Init_MySQL.sql
+      
+volumes:
+  pgdata:
+  mysql_data:
+
+
+
+# version: '3.8'
+
+# services:
+  
+#   postgres_db:
+#     image: postgres:latest
+#     container_name: postgres_db
+#     restart: always
+#     environment:
+#       POSTGRES_DB: ums
+#       POSTGRES_USER: postgres
+#       POSTGRES_PASSWORD: umsAdmin@123
+#     ports:
+#       - "5435:5432"
+#     volumes:
+#       - postgres_data:/var/lib/postgresql/data
+
+#   mysql_db:
+#     image: mysql:latest
+#     container_name: mysql_db
+#     restart: always
+#     environment:
+#       MYSQL_DATABASE: ums
+#       MYSQL_USER: mysql
+#       MYSQL_PASSWORD: umsAdmin@123
+#       MYSQL_ROOT_PASSWORD: admin@123
+#     ports:
+#       - "3306:3306"
+#     volumes:
+#       - mysql_data:/var/lib/mysql
+
+# volumes:
+#   postgres_data:
+#   mysql_data:
