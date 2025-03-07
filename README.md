@@ -21,7 +21,7 @@ User Management API is RESTful web service built with .NET Core. This API has cu
 ### Installation
 1. Clone the repository:
     ```bash
-    git clone https://github.com/yourusername/yourrepository.git
+    https://github.com/kavita-patel-dev/UserManagement.git
     ```
 
 2. Navigate to the project directory:
@@ -60,6 +60,5 @@ Using postman you can test endpoint `http://localhost:8080/Users` with Get reque
 
 ## Notes
 - When you build containers both MySQL and PostgreSQL databases will be created with required table and data seeder values. 
-- There two different files created under UserManagement.Infrastructure -> DBScript -> Init_MySQL.sql and Init.PostgreSQL.sql which is used once only while building container.
-- docker-compose.yml file has that path under volumes
+- There two different files created under UserManagement.Infrastructure -> DBScript -> Init_MySQL.sql and Init.PostgreSQL.sql which is used once only while building container and docker-compose.yml file has that path under volumes
 - If you want to run this solution in VS 2022 then need to change connectionstring to have server name as localhost. Currently connectionstring has service name defined in docker-compose.yml file which is being used to communicate two containers(API,Database). 
